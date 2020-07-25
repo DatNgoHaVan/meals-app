@@ -3,13 +3,15 @@ import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Platform } 
 import { CATEGORIES } from '../data/dummy-data';
 import Category from '../models/category';
 import Colors from '../constants/Colors';
+import CategoryGridTitle from '../components/CategoryGridTitle';
 
 const CategoriesScreen = (props: any) => {
   const renderGridItem = (itemData: any) => {
     return (
-      <TouchableOpacity
-        style={styles.gridItem}
-        onPress={() => {
+      <CategoryGridTitle
+        title={itemData.item.title}
+        color={itemData.item.color}
+        onSelect={() => {
           props.navigation.navigate({
             routeName: 'CategoryMeals',
             params: {
@@ -17,11 +19,7 @@ const CategoriesScreen = (props: any) => {
             }
           });
         }}
-      >
-        <View >
-          <Text>{itemData.item.title}</Text>
-        </View>
-      </TouchableOpacity>
+      />
     )
   }
 
@@ -36,14 +34,6 @@ const CategoriesScreen = (props: any) => {
 }
 
 export default CategoriesScreen;
-
-CategoriesScreen.navigationOptions = {
-  headerTitle: 'Meal Categories',
-  headerStyle: {
-    backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
-  },
-  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-}
 
 const styles = StyleSheet.create({
   screen: {
