@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button, Platform } from 'react-native'
-import { CATEGORIES } from '../data/dummy-data';
+import { StyleSheet, Text, View, Button, Platform, FlatList } from 'react-native'
+import { CATEGORIES, MEALS } from '../data/dummy-data';
 import Colors from '../constants/Colors';
 
 const CategoryMealsScreen = (props: any) => {
@@ -8,17 +8,18 @@ const CategoryMealsScreen = (props: any) => {
 
   const selectedCat = CATEGORIES.find(cat => cat.id === catId);
 
+  const displayedMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
+
+  const renderMealItem = (itemData: any) => (
+    <View><Text>{itemData.item.title}</Text></View>
+  );
+
   return (
     <View style={styles.screen}>
-      <Text>Category meal screens!</Text>
-      <Text>{selectedCat?.title}</Text>
-      <Button
-        title='Go to the Details'
-        onPress={() => { props.navigation.navigate('MealDetail'); }}
-      />
-      <Button
-        title="Go back"
-        onPress={() => { props.navigation.pop(); }}
+      <FlatList
+        data={displayedMeals}
+        keyExtractor={(item, index) => item.id}
+        renderItem={renderMealItem}
       />
     </View>
   )
