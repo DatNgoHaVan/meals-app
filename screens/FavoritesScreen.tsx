@@ -1,17 +1,23 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import MealList from '../components/MealList';
+import { MEALS } from '../data/dummy-data';
 
-const FavoriteScreen = (props: any) => {
+const FavoritesScreen = (props: any) => {
+  const favMeal = MEALS.filter(meal => meal.id === 'm1')
   return (
-    <View style={styles.screen}>
-      <Text>
-        Favorite screens!
-      </Text>
-    </View>
+    <MealList
+      listData={favMeal}
+      navigation={props.navigation}
+    />
   )
 }
 
-export default FavoriteScreen
+FavoritesScreen.navigationOptions = {
+  headerTitle: 'Your Favorites'
+}
+
+export default FavoritesScreen
 
 const styles = StyleSheet.create({
   screen: {
