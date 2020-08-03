@@ -1,5 +1,5 @@
 import React from 'react';
-import { createAppContainer, createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation';
 import { Platform } from 'react-native';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 
@@ -10,6 +10,7 @@ import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 import MealDetailScreen from '../screens/MealDetailScreen';
 import Colors from '../constants/Colors';
 import FavoritesScreen from '../screens/FavoritesScreen';
+import FiltersScreen from '../screens/FiltersScreen';
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -22,9 +23,6 @@ const defaultStackNavOptions = {
 const MealsNavigator = createStackNavigator({
   Categories: {
     screen: CategoriesScreen,
-    navigationOptions: {
-      headerTitle: 'Meal Categories'
-    }
   },
   CategoryMeals: {
     screen: CategoryMealsScreen
@@ -76,4 +74,26 @@ const MealsFavTabNavigator =
       }
     });
 
-export default createAppContainer(MealsFavTabNavigator);
+const FiltersNavigator = createStackNavigator({
+  Filters: FiltersScreen
+}, {
+  defaultNavigationOptions: defaultStackNavOptions
+})
+
+const MainNavigator = createDrawerNavigator({
+  MealFavs: {
+    screen: MealsFavTabNavigator, navigationOptions: {
+      drawerLabel: 'Meals'
+    }
+  },
+  Filters: FiltersNavigator
+}, {
+  contentOptions: {
+    activeTintColor: Colors.accentColor,
+    labelStyle: {
+      fontFamily: 'open-sans-bold'
+    }
+  }
+})
+
+export default createAppContainer(MainNavigator);
